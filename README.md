@@ -1,6 +1,6 @@
 # Fourier-Basis-Mapping
 
-### This is an offical implementation of VH-NBEATS and FBM model. 
+### This is an offical implementation of FBM-L, FBM-NL and FBM-NP model. 
 
 ### Implement the project
 
