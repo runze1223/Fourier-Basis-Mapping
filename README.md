@@ -12,7 +12,7 @@
 ```
 sh ./scripts/FBM/ETTh1.sh
 ```
-You can adjust the hyperparameters based on your needs and achieve better results.
+You can adjust the hyperparameters based on your needs.
 
 ## Acknowledgement
 
@@ -44,7 +44,6 @@ https://github.com/VEWOXIC/FITS
 
 ## Citation
 
-If you find this repo useful in your research, please consider citing our paper as follows:
+If you find this repository useful, please consider citing our paper.
 
-```
-Please contact the author: 2689679964@qq.com or runze.y@sjtu.edu.cn
+If you have any questions, feel free to contact: runze.y@sjtu.edu.cn
