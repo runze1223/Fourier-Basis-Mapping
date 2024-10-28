@@ -1,6 +1,6 @@
 # Fourier-Basis-Mapping
 
-### This is an offical implementation of FBM-L, FBM-NL and FBM-NP model. 
+### This is the offical implementation of FBM-L, FBM-NL and FBM-NP model. 
 
 ### Implement the project
 
@@ -8,7 +8,7 @@
 
 2. Download data. You can download the ETTh1, ETTh2, ETTm1, ETTm2, Electricity and Traffic data from [Autoformer](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy) and WTH data from [Google Drive](https://drive.google.com/drive/folders/1ohGYWWohJlOlb2gsGTeEq3Wii2egnEPR?usp=sharing) Create a seperate folder ```./dataset``` and put all the csv files in the directory.
 
-3. Training. All the scripts are in the directory ```./scripts/file_to_implement.sh```
+3. Training. All the scripts are in the directory ```./scripts/FBM/file_to_implement.sh```
 ```
 sh ./scripts/FBM/ETTh1.sh
 ```
@@ -36,7 +36,11 @@ https://github.com/aikunyi/FreTS
 
 https://github.com/hqh0728/CrossGNN
 
+https://github.com/thuml/iTransformer
 
+https://github.com/kwuking/TimeMixer
+
+https://github.com/VEWOXIC/FITS
 
 ## Citation
 
