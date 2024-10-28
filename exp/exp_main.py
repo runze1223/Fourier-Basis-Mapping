@@ -34,9 +34,9 @@ class Exp_Main(Exp_Basic):
             'Linear': Linear,
             'N-BEATS': nbeats_original,
             'PatchTST': PatchTST,
-            'FBP-L': FBP_L,
-            'FBP-NL': FBP_NL,
-            'FBP-NP': FBP_NP,
+            'FBM-L': FBP_L,
+            'FBM-NL': FBP_NL,
+            'FBM-NP': FBP_NP,
             'CrossGNN': CrossGNN,            
             'FreLinear': FreTS,
         }
@@ -79,7 +79,7 @@ class Exp_Main(Exp_Basic):
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                             outputs = self.model(batch_x)
                         else:
                             if self.args.output_attention:
@@ -87,7 +87,7 @@ class Exp_Main(Exp_Basic):
                             else:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
                 else:
-                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                         outputs = self.model(batch_x)
                     else:
                         if self.args.output_attention:
@@ -129,12 +129,6 @@ class Exp_Main(Exp_Basic):
 
         if self.args.use_amp:
             scaler = torch.cuda.amp.GradScaler()
-            
-        # scheduler = lr_scheduler.OneCycleLR(optimizer = model_optim,
-        #                                     steps_per_epoch = train_steps,
-        #                                     pct_start = self.args.pct_start,
-        #                                     epochs = self.args.train_epochs,
-        #                                     max_lr = self.args.learning_rate)
 
         for epoch in range(self.args.train_epochs):
             iter_count = 0
@@ -158,7 +152,7 @@ class Exp_Main(Exp_Basic):
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                             outputs = self.model(batch_x)
                         else:
                             if self.args.output_attention:
@@ -172,7 +166,7 @@ class Exp_Main(Exp_Basic):
                         loss = criterion(outputs, batch_y)
                         train_loss.append(loss.item())
                 else:
-                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                             outputs = self.model(batch_x)
                     else:
                         if self.args.output_attention:
@@ -203,10 +197,6 @@ class Exp_Main(Exp_Basic):
                     loss.backward()
                     model_optim.step()
                     
-                # if self.args.lradj == 'TST':
-                #     adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=False)
-                #     scheduler.step()
-
             print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
             train_loss = np.average(train_loss)
             vali_loss = self.vali(vali_data, vali_loader, criterion)
@@ -251,7 +241,7 @@ class Exp_Main(Exp_Basic):
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                             outputs = self.model(batch_x)
                         else:
                             if self.args.output_attention:
@@ -259,7 +249,7 @@ class Exp_Main(Exp_Basic):
                             else:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
                 else:
-                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                             outputs = self.model(batch_x)
                     else:
                         if self.args.output_attention:
@@ -342,7 +332,7 @@ class Exp_Main(Exp_Basic):
                 # encoder - decoder
                 if self.args.use_amp:
                     with torch.cuda.amp.autocast():
-                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                        if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                             outputs = self.model(batch_x)
                         else:
                             if self.args.output_attention:
@@ -350,7 +340,7 @@ class Exp_Main(Exp_Basic):
                             else:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
                 else:
-                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBP' in self.args.model or 'CrossGNN' in self.args.model :
+                    if 'Linear' in self.args.model or 'TST' in self.args.model or 'FBM' in self.args.model or 'CrossGNN' in self.args.model :
                         outputs = self.model(batch_x)
                     else:
                         if self.args.output_attention:
