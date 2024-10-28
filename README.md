@@ -1,4 +1,4 @@
-# Fourier-Basis-Mapping
+# Rethinking Fourier Transform from A Basis Functions Perspective for Long-term Time Series Forecasting. (NeurIPS 2024)
 
 ### This is the offical implementation of FBM-L, FBM-NL and FBM-NP model. 
 
