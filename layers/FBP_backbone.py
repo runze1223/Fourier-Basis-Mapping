@@ -197,17 +197,6 @@ class Flatten_Head_NLinear(nn.Module):
             x = self.linear(x)
         return x
         
-
-
-
-
-
-
-
-
-
-
-    
     
 class TSTiEncoder(nn.Module):  #i means channel-independent
     def __init__(self, c_in, patch_num, patch_len, max_seq_len=1024,
@@ -218,7 +207,7 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
         
         
         super().__init__()
-        
+        self.pos_enc=0
         self.patch_num = patch_num
         self.patch_len = patch_len
         
@@ -243,11 +232,13 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
         n_vars = x.shape[1]
         # Input encoding
         x = x.permute(0,1,3,2)                                                   # x: [bs x nvars x patch_num x patch_len]
-
         x = self.W_P(x)                                                          # x: [bs x nvars x patch_num x d_model]
-
         u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model]
-        u = self.dropout(u)
+
+        if self.pos_enc:
+            u = self.dropout(u + self.W_pos)
+        else:
+            u = self.dropout(u)  
         # + self.W_pos                                         # u: [bs * nvars x patch_num x d_model]
 
         # Encoder
@@ -514,7 +505,7 @@ class Flatten_Head(nn.Module):
 #####################################NPatchTST experiment###########################################
 
 class backbone_new_NPatchTST(nn.Module):
-    def __init__(self, c_in:int, context_window:int, target_window:int, patch_len:int, stride:int, max_seq_len:Optional[int]=1024, 
+    def __init__(self, c_in:int, context_window:int, target_window:int, patch_num:int, stride:int, max_seq_len:Optional[int]=1024, 
                  n_layers:int=3, d_model=128, n_heads=16, d_k:Optional[int]=None, d_v:Optional[int]=None,
                  d_ff:int=256, norm:str='BatchNorm', attn_dropout:float=0., dropout:float=0., act:str="gelu", key_padding_mask:bool='auto',
                  padding_var:Optional[int]=None, attn_mask:Optional[Tensor]=None, res_attention:bool=True, pre_norm:bool=False, store_attn:bool=False,
@@ -531,10 +522,9 @@ class backbone_new_NPatchTST(nn.Module):
         self.n_vars = c_in
         self.individual = individual
 
+        self.pacth_num=patch_num
 
-        patch_num=14
-        patch_len=4056
-
+        patch_len=int((context_window*(context_window//2+1))/patch_num)
         self.backbone = TSTiEncoder(c_in, patch_num=patch_num, patch_len=patch_len, max_seq_len=max_seq_len,
                                 n_layers=n_layers, d_model=d_model, n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff,
                                 attn_dropout=attn_dropout, dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
@@ -576,7 +566,7 @@ class backbone_new_NPatchTST(nn.Module):
 
         z=basis_cos+basis_sin
 
-        z=torch.split(z, 14, dim=-1)
+        z=torch.split(z, self.pacth_num, dim=-1)
         z=torch.cat(z,dim=-2)
         # z=z.permute(0,1,3,2)
 

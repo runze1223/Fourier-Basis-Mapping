@@ -82,7 +82,6 @@ class PatchTST_backbone(nn.Module):
         z = z.unfold(dimension=-1, size=self.patch_len, step=self.stride)                   # z: [bs x nvars x patch_num x patch_len]
         z = z.permute(0,1,3,2)   
                                                          # z: [bs x nvars x patch_len x patch_num]
-
         z = self.backbone(z)   #z: [bs x nvars x d_model x patch_num]
         z = self.head(z)
 
@@ -150,7 +149,7 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
         
         
         super().__init__()
-        
+        self.pos_enc=0
         self.patch_num = patch_num
         self.patch_len = patch_len
         
@@ -176,11 +175,14 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
         # Input encoding
         x = x.permute(0,1,3,2)                                                   # x: [bs x nvars x patch_num x patch_len]
         x = self.W_P(x)                                                          # x: [bs x nvars x patch_num x d_model]
-
         u = torch.reshape(x, (x.shape[0]*x.shape[1],x.shape[2],x.shape[3]))      # u: [bs * nvars x patch_num x d_model]
-        u = self.dropout(u)
-        # + self.W_pos                                         # u: [bs * nvars x patch_num x d_model]
-
+        if self.pos_enc:
+            u = self.dropout(u + self.W_pos)
+            print(1)
+        else:
+            u = self.dropout(u)
+            print(2)                                     # u: [bs * nvars x patch_num x d_model]
+        print(stop)
         # Encoder
         z = self.encoder(u)                                                      # z: [bs * nvars x patch_num x d_model]
         z = torch.reshape(z, (-1,n_vars,z.shape[-2],z.shape[-1]))                # z: [bs x nvars x patch_num x d_model]
@@ -397,67 +399,6 @@ class _ScaledDotProductAttention(nn.Module):
 
         if self.res_attention: return output, attn_weights, attn_scores
         else: return output, attn_weights
-
-class BinaryConcrete(nn.Module):
-    def __init__(self, temp,batch_size,ndim):
-        super(BinaryConcrete, self).__init__()
-        self.gumbel = torch.distributions.Gumbel(
-            torch.zeros([batch_size,ndim,1]), torch.ones([batch_size,ndim,1]))
-        self.temp = temp
-        self.sigmoid = nn.Sigmoid()
-
-    def forward(self,alpha):
-        noise = torch.rand_like(alpha).cuda()
-        noise=torch.log(noise)-torch.log(1-noise)
-        ouput=self.sigmoid((alpha + noise) / self.temp)
-        # ouput=self.sigmoid((alpha + self.gumbel.sample().cuda()) / self.temp)
-        return ouput
-
-
-#new experiment 
-import math
-from torch.fft import rfft, irfft
-
-
-class Inference(nn.Module):
-    def __init__(self, input=336, hidden=168, output=168,dim=7,individual=False):
-        super(Inference, self).__init__()
-        self.dim=dim
-        self.individual=individual
-        if individual:
-            self.fc1 = nn.ModuleList()
-            self.fc2 = nn.ModuleList()
-            self.act_fn = nn.Tanh()
-            for i in range(self.dim):
-                self.fc1.append( nn.Linear(input, hidden))
-                self.fc2.append(nn.Linear(hidden, output))
-        else:
-            self.fc1 = nn.Linear(input, hidden)
-            self.fc2 = nn.Linear(hidden, output)
-            self.sigmoid=nn.Sigmoid()
-            self.act_fn = nn.Tanh()
-        # self.fc1 = nn.Linear(input, hidden)
-        # self.fc2 = nn.Linear(hidden, output)
-        # self.act_fn = nn.Tanh()
-
-    def forward(self, x):
-        if self.individual:
-            x_out = []
-            for i in range(self.dim):
-                z = self.fc1[i](x[:,i,:])          # z: [bs x d_model * patch_num]
-                z = self.act_fn(z)
-                z = self.fc2[i](z)                    # z: [bs x target_window]
-                x_out.append(z)
-            h = torch.stack(x_out, dim=1) 
-        else:
-            h = self.fc1(x)
-            h = self.act_fn(h)
-            h = self.fc2(h)
-            h=self.sigmoid(h)
-            h_new=torch.log(h+1e-08*torch.ones_like(h)/(torch.ones_like(h)-h+1e-08*torch.ones_like(h)))
-
-        return h_new
-
 
 
 # class PatchTST_backbone_new(nn.Module):
