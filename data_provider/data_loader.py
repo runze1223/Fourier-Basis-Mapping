@@ -84,7 +84,7 @@ class Dataset_ETT_hour(Dataset):
             df_stamp['day_of_year']=df_stamp['day_of_year'].astype('category')
             df_stamp['week']=df_stamp['week'].astype('category')
             df_stamp['hour']=df_stamp['hour'].astype('category')
-            data_stamp = df_stamp.drop(['date'], 1).values
+            data_stamp = df_stamp.drop(['date'],  axis=1).values
             
         elif self.timeenc == 1:
             data_stamp = time_features(pd.to_datetime(df_stamp['date'].values), freq=self.freq)
@@ -181,7 +181,7 @@ class Dataset_ETT_minute(Dataset):
             df_stamp['day_of_year']=df_stamp['day_of_year'].astype('category')
             df_stamp['week']=df_stamp['week'].astype('category')
             df_stamp['hour']=df_stamp['hour'].astype('category')
-            data_stamp = df_stamp.drop(['date'], 1).values
+            data_stamp = df_stamp.drop(['date'],  axis=1).values
             
         elif self.timeenc == 1:
             data_stamp = time_features(pd.to_datetime(df_stamp['date'].values), freq=self.freq)
@@ -271,12 +271,8 @@ class Dataset_Custom(Dataset):
         border2 = border2s[self.set_type]
 
         if self.features == 'M' or self.features == 'MS':
-            if len(df_raw.columns)>51:
-                cols_data = df_raw.columns[-20:]
-            else:
-                cols_data = df_raw.columns[1:]
-
             # cols_data = df_raw.columns[-20:]
+            cols_data = df_raw.columns[1:]
             df_data = df_raw[cols_data]
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
@@ -303,7 +299,7 @@ class Dataset_Custom(Dataset):
             df_stamp['day_of_year']=df_stamp['day_of_year'].astype('category')
             df_stamp['week']=df_stamp['week'].astype('category')
             df_stamp['hour']=df_stamp['hour'].astype('category')
-            data_stamp = df_stamp.drop(['date'], 1).values
+            data_stamp = df_stamp.drop(['date'],  axis=1).values
             
         elif self.timeenc == 1:
             data_stamp = time_features(pd.to_datetime(df_stamp['date'].values), freq=self.freq)
@@ -389,10 +385,7 @@ class Dataset_Pred(Dataset):
         border2 = border2s[2]
 
         if self.features == 'M' or self.features == 'MS':
-            if len(df_raw.columns)>51:
-                cols_data = df_raw.columns[-20:]
-            else:
-                cols_data = df_raw.columns[1:]
+            cols_data = df_raw.columns[1:]
             df_data = df_raw[cols_data]
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
@@ -413,7 +406,7 @@ class Dataset_Pred(Dataset):
             df_stamp['hour'] = df_stamp.date.apply(lambda row: row.hour, 1)
             df_stamp['minute'] = df_stamp.date.apply(lambda row: row.minute, 1)
             df_stamp['minute'] = df_stamp.minute.map(lambda x: x // 15)
-            data_stamp = df_stamp.drop(['date'], 1).values
+            data_stamp = df_stamp.drop(['date'],  axis=1).values
         elif self.timeenc == 1:
             data_stamp = time_features(pd.to_datetime(df_stamp['date'].values), freq=self.freq)
             data_stamp = data_stamp.transpose(1, 0)
