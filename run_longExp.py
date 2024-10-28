@@ -80,10 +80,11 @@ parser.add_argument('--dropout_prob', type=float, default=0.1,help='nbeats')
 parser.add_argument('--activation_nbeats', type=str, default='selu',help='nbeats')
 parser.add_argument('--duplicate', type=int, default=0,help='Seasonal effect layer are studied twice')
 
-# VH-PatchTST
+#patchtst
 parser.add_argument('--fc_dropout', type=float, default=0.05, help='fully connected dropout')
 parser.add_argument('--head_dropout', type=float, default=0.0, help='head dropout')
 parser.add_argument('--patch_len', type=int, default=16, help='patch length')
+parser.add_argument('--patch_num', type=int, default=14, help='patch number')
 parser.add_argument('--stride', type=int, default=8, help='stride')
 parser.add_argument('--padding_patch', default='end', help='None: None; end: padding on the end')
 parser.add_argument('--revin', type=int, default=1, help='RevIN; True 1 False 0')
@@ -92,18 +93,14 @@ parser.add_argument('--subtract_last', type=int, default=0, help='0: subtract me
 parser.add_argument('--decomposition', type=int, default=0, help='decomposition; True 1 False 0')
 parser.add_argument('--kernel_size', type=int, default=24, help='decomposition-kernel')
 parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
-parser.add_argument('--individual_embed', type=int, default=0, help='individual head; True 1 False 0')
-parser.add_argument('--embedding',nargs="+", default=[0,3],help='timestamp embedding:{ 0: Year effect 1: Week-day effect 2: Week effect 4: Day effect ',type=int)
-parser.add_argument('--beta', type=float, default=0, help='control the prior and posterior information')
-parser.add_argument('--alpha_0', type=float, default=0, help='control the KL divergence for hierarchicail timestamp block')
-parser.add_argument('--alpha_1', type=float, default=0, help='control the KL divergence for harmonic seasoanl block')
+
 
 # optimization
 parser.add_argument('--num_workers', type=int, default=0, help='data loader num workers')
 parser.add_argument('--itr', type=int, default=1, help='experiments times')
-parser.add_argument('--train_epochs', type=int, default=40, help='train epochs')
-parser.add_argument('--batch_size', type=int, default=8, help='batch size of train input data')
-parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
+parser.add_argument('--train_epochs', type=int, default=50, help='train epochs')
+parser.add_argument('--batch_size', type=int, default=16, help='batch size of train input data')
+parser.add_argument('--patience', type=int, default=5, help='early stopping patience')
 parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
 parser.add_argument('--des', type=str, default='test', help='exp description')
 parser.add_argument('--loss', type=str, default='mse', help='loss function')
@@ -144,7 +141,6 @@ if args.use_gpu and args.use_multi_gpu:
 
 print('Args in experiment:')
 print(args)
-
 
 Exp = Exp_Main
 
