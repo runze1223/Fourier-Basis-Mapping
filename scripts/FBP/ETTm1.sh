@@ -6,32 +6,7 @@ if [ ! -d "./logs/LongForecasting_new" ]; then
     mkdir ./logs/LongForecasting_new
 fi
 
-# model_name=FBP-L
-
-# for pred_len in 96 192 336 720
-# do
-#     python -u run_longExp.py \
-#     --is_training 1\
-#     --root_path ./dataset/ \
-#     --data_path ETTm1.csv \
-#     --model_id  ETTm1 \
-#     --model  $model_name  \
-#     --data ETTm1 \
-#     --features M \
-#     --seq_len 336\
-#     --pred_len $pred_len\
-#     --decomposition 0\
-#     --enc_in 7 \
-#     --dec_in 7 \
-#     --c_out 7\
-#     --des 'Exp'\
-#     --train_epochs 100\
-#     --embedding 0\
-#     --beta 1\
-#     --itr 1 --batch_size 128 --learning_rate 0.00001 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
-# done
-
-model_name=FBP-NL
+model_name=FBM-L
 
 for pred_len in 96 192 336 720
 do
@@ -51,45 +26,97 @@ do
     --c_out 7\
     --des 'Exp'\
     --train_epochs 100\
-    --embedding 0\
-    --beta 1\
     --itr 1 --batch_size 128 --learning_rate 0.00001 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
 done
 
+model_name=FBM-NL
 
-# model_name=FBP-NP
+for pred_len in 96 192 336 720
+do
+    python -u run_longExp.py \
+    --is_training 1\
+    --root_path ./dataset/ \
+    --data_path ETTm1.csv \
+    --model_id  ETTm1 \
+    --model  $model_name  \
+    --data ETTm1 \
+    --features M \
+    --seq_len 336\
+    --pred_len $pred_len\
+    --decomposition 0\
+    --enc_in 7 \
+    --dec_in 7 \
+    --c_out 7\
+    --des 'Exp'\
+    --train_epochs 100\
+    --itr 1 --batch_size 128 --learning_rate 0.00002 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
+done
 
-# for pred_len in 96 192 336 720
-# do
-#     python -u run_longExp.py \
-#     --is_training 1\
-#     --root_path ./dataset/ \
-#     --data_path ETTm1.csv \
-#     --model_id  ETTm1 \
-#     --model  $model_name  \
-#     --data ETTm1 \
-#     --features M \
-#     --seq_len 336\
-#     --pred_len $pred_len\
-#     --decomposition 0\
-#     --enc_in 7 \
-#     --dec_in 7 \
-#     --c_out 7\
-#     --e_layers 3\
-#     --n_heads 1 \
-#     --d_model 16 \
-#     --d_ff 128 \
-#     --dropout 0.3\
-#     --fc_dropout 0.3\
-#     --head_dropout 0\
-#     --patch_len 16\
-#     --stride 8\
-#     --des 'Exp'\
-#     --train_epochs 100\
-#     --embedding 0\
-#     --beta 1\
-#     --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
-# done
+
+model_name=FBM-NP
+
+for pred_len in 96 192 
+do
+    python -u run_longExp.py \
+    --is_training 1\
+    --root_path ./dataset/ \
+    --data_path ETTm1.csv \
+    --model_id  ETTm1 \
+    --model  $model_name  \
+    --data ETTm1 \
+    --features M \
+    --seq_len 336\
+    --pred_len $pred_len\
+    --decomposition 0\
+    --enc_in 7 \
+    --dec_in 7 \
+    --c_out 7\
+    --e_layers 3\
+    --n_heads 4 \
+    --d_model 16 \
+    --d_ff 128 \
+    --dropout 0.3\
+    --fc_dropout 0.3\
+    --head_dropout 0\
+    --patch_len 16\
+    --stride 8\
+    --des 'Exp'\
+    --train_epochs 100\
+    --itr 1 --batch_size 128 --learning_rate 0.0005 >logs/LongForecasting_new/ETTm1_$model_name'_336_'$pred_len.log  
+done
+
+
+model_name=FBM-NP
+
+for pred_len in  336 720
+do
+    python -u run_longExp.py \
+    --is_training 1\
+    --root_path ./dataset/ \
+    --data_path ETTm1.csv \
+    --model_id  ETTm1 \
+    --model  $model_name  \
+    --data ETTm1 \
+    --features M \
+    --seq_len 336\
+    --pred_len $pred_len\
+    --decomposition 0\
+    --enc_in 7 \
+    --dec_in 7 \
+    --c_out 7\
+    --e_layers 3\
+    --n_heads 4 \
+    --d_model 16 \
+    --d_ff 128 \
+    --dropout 0.3\
+    --fc_dropout 0.3\
+    --head_dropout 0\
+    --patch_len 16\
+    --stride 8\
+    --des 'Exp'\
+    --train_epochs 100\
+    --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting_new/ETTm1_$model_name'_336_'$pred_len.log  
+done
 
 
 # model_name=PatchTST
@@ -111,7 +138,7 @@ done
 #     --dec_in 7 \
 #     --c_out 7\
 #     --e_layers 3\
-#     --n_heads 1 \
+#     --n_heads 4 \
 #     --d_model 16 \
 #     --d_ff 128 \
 #     --dropout 0.3\
@@ -121,9 +148,7 @@ done
 #     --stride 8\
 #     --des 'Exp'\
 #     --train_epochs 100\
-#     --embedding 0\
-#     --beta 1\
-#     --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
+#     --itr 1 --batch_size 128 --learning_rate 0.0005 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
 # done
 
 # model_name=NLinear
@@ -146,8 +171,6 @@ done
 #     --c_out 7\
 #     --des 'Exp'\
 #     --train_epochs 100\
-#     --embedding 0\
-#     --beta 1\
 #     --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting_new/ETTm1__$model_name'_336_'$pred_len.log  
 # done
 
