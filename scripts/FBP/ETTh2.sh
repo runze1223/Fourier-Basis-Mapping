@@ -79,7 +79,7 @@ do
     --fc_dropout 0.3\
     --head_dropout 0\
     --stride 8\
-    --patch_num 28\
+    --patch_num 14\
     --des 'Exp'\
     --train_epochs 100\
     --itr 1 --batch_size 128 --learning_rate 0.0005 >logs/LongForecasting_new/ETTh2__$model_name'_336_'$pred_len.log  
