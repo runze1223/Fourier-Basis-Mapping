@@ -13,7 +13,7 @@
 sh ./scripts/FBM/ETTh1.sh
 ```
 You can adjust the hyperparameters based on your needs.
-## Architecture of FBM
+## Fourier Basis Mapping
 
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag1.png)
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag2.png)
