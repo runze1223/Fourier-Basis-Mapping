@@ -13,6 +13,12 @@
 sh ./scripts/FBM/ETTh1.sh
 ```
 You can adjust the hyperparameters based on your needs.
+## Architecture of FBM
+
+
+## Main Results
+
+
 
 ## Acknowledgement
 
