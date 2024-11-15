@@ -15,10 +15,10 @@ sh ./scripts/FBM/ETTh1.sh
 You can adjust the hyperparameters based on your needs.
 ## Architecture of FBM
 
-
+![alt text](https://github.com/runze1223/)
 ## Main Results
 
-
+![alt text](https://github.com/runze1223)
 
 ## Acknowledgement
 
