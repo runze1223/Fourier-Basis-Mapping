@@ -74,11 +74,12 @@ do
     --dropout 0.2\
     --fc_dropout 0.2\
     --head_dropout 0\
+    --patch_num 14\
     --decomposition 0\
     --stride 8\
     --des 'Exp'\
     --train_epochs 100\
-    --patience 15\
+    --patience 10\
     --itr 1 --batch_size 16 --learning_rate 0.00005 >logs/LongForecasting_new/Electricity__$model_name'_336_'$pred_len.log  
 done
 
