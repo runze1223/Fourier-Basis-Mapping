@@ -78,7 +78,7 @@ do
     --dropout 0.3\
     --fc_dropout 0.3\
     --head_dropout 0\
-    --patch_len 16\
+    --patch_num 14\
     --stride 8\
     --des 'Exp'\
     --train_epochs 100\
