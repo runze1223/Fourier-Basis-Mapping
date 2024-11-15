@@ -54,7 +54,7 @@ done
 
 
 model_name=FBM-NP
-for pred_len in 192 336 720
+for pred_len in 96 192 336 720
 do
     python -u run_longExp.py \
     --is_training 1\
