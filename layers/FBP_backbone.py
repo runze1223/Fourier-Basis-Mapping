@@ -566,9 +566,15 @@ class backbone_new_NPatchTST(nn.Module):
 
         z=basis_cos+basis_sin
 
-        z=torch.split(z, self.pacth_num, dim=-1)
-        z=torch.cat(z,dim=-2)
-        # z=z.permute(0,1,3,2)
+        a,b,c,d = z.shape
+        e=d//self.pacth_num
+        z=z.reshape(a,b,c,self.pacth_num,e)
+        z=z.permute(0,1,3,2,4)
+        z=z.reshape(a,b,z.size()[2],-1)
+        z=z.permute(0,1,3,2)
+
+        # z=torch.split(z, self.pacth_num, dim=-1)
+        # z=torch.cat(z,dim=-2)
 
         z = self.backbone(z) 
 
