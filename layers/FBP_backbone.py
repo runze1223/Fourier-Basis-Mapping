@@ -207,7 +207,7 @@ class TSTiEncoder(nn.Module):  #i means channel-independent
         
         
         super().__init__()
-        self.pos_enc=0
+        self.pos_enc=1
         self.patch_num = patch_num
         self.patch_len = patch_len
         
