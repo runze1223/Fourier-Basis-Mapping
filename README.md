@@ -13,8 +13,7 @@
 ```
 sh ./scripts/FBM/ETTh1.sh
 ```
-You can adjust the hyperparameters based on your needs. It is worth noting that a smaller learning rate is required, and the adjusting learning rate strategy 'TST' has been removed in our method.
-## Fourier Basis Mapping
+You can adjust the hyperparameters based on your needs. Notably, our method requires a smaller learning rate due to the decomposition of values, and the learning rate adjustment strategy 'TST' has been excluded.
 
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag1.png)
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag2.png)
