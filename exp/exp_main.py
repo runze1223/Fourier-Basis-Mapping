@@ -58,7 +58,7 @@ class Exp_Main(Exp_Basic):
 
 
     def _select_criterion(self):
-        criterion = nn.MSELoss()
+        criterion = nn.L1Loss()
         return criterion
     
 
