@@ -17,6 +17,9 @@ You can adjust the hyperparameters based on your needs. Notably, our method requ
 
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag1.png)
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag2.png)
+
+### NEWS:The training loss has been changed from L2 to L1
+
 ## Main Results
 
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag3.png)
