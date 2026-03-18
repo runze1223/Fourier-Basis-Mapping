@@ -3,9 +3,9 @@
 ### This is the offical implementation of FBM-L, FBM-NL and FBM-NP model. 
 ### Please follow our latest work, which is an extension of this paper to a journal: "Fourier Basis Mapping: A Time-Frequency Learning Framework for Time Series Forecasting" on arxiv with the code available at:  https://github.com/runze1223/FBM-S
 
-### NEWS:The training loss has been changed from L2 to L1 for better performance.
+### 📰 News:The training loss has been changed from L2 to L1 for better performance.
 
-### Implement the project
+### 🚀 Implement the project
 
 1. Install requirements. ```pip install -r requirements.txt```
 
@@ -21,11 +21,11 @@ You can adjust the hyperparameters based on your needs. Notably, our method requ
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag2.png)
 
 
-## Main Results
+## 📊 Main Results
 
 ![alt text](https://github.com/runze1223/Fourier-Basis-Mapping/blob/main/pic/imag3.png)
 
-## Acknowledgement
+## 📚 Acknowledgement
 
 We appreciate the following github repo very much for the valuable code base and datasets:
 
