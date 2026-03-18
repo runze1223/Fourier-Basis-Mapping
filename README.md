@@ -3,7 +3,7 @@
 ### This is the offical implementation of FBM-L, FBM-NL and FBM-NP model. 
 ### Please follow our latest work, which is an extension of this paper to a journal: "Fourier Basis Mapping: A Time-Frequency Learning Framework for Time Series Forecasting" on arxiv with the code available at:  https://github.com/runze1223/FBM-S
 
-### NEWS:The training loss has been changed from L2 to L1
+### NEWS:The training loss has been changed from L2 to L1 for better performance.
 
 ### Implement the project
 
